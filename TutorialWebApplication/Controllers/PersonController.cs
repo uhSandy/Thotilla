@@ -14,11 +14,11 @@ namespace TutorialWebApplication.Controllers
         [System.Web.Http.HttpPost]
         [System.Web.Http.ActionName("api/Person/CryDetect")]
         [ValidateAntiForgeryToken]
-        public async Task<String> CryDetectAsync([Bind(Include = "Id,GuId,DateTime,Status")] Sound sound)
+        public async Task<String> CryDetectAsync([Bind(Include = "Id,GuId,DateTime,Status")] PlaySong sound)
         {
             if (ModelState.IsValid)
             {
-                await DocumentDBRepository<Sound>.CreateItemAsync(sound);
+                await DocumentDBRepository<PlaySong>.CreateItemAsync(sound);
                 return "Cry detect valid person";
             }
 
@@ -55,7 +55,7 @@ namespace TutorialWebApplication.Controllers
         public async Task<String> DetailsAsync(string id)
         {
 
-            Sound sound = DocumentDBRepository<Sound>.mobileResponseForBabyCry(id);
+            Sound sound = DocumentDBRepository<PlaySong>.mobileResponseForBabyCry(id);
 
             if (sound != null)
             {

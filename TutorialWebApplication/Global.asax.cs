@@ -24,7 +24,8 @@ namespace TutorialWebApplication
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             DocumentDBRepository<TutorialWebApplication.Models.Person>.Initialize();
-            DocumentDBRepository<TutorialWebApplication.Models.Sound>.Initialize();
+            DocumentDBRepository<TutorialWebApplication.Models.PlaySong>.Initialize();
         }
+
     }
 }

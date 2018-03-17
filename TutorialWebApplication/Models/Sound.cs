@@ -11,8 +11,8 @@ namespace TutorialWebApplication.Models
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
-        [JsonProperty(PropertyName = "guId")]
-        public String GuId { get; set; }
+        [JsonProperty(PropertyName = "guiId")]
+        public String GuiId { get; set; }
 
         [JsonProperty(PropertyName = "dateTime")]
         public DateTime DateTime { get; set; }

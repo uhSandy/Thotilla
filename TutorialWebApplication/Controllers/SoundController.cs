@@ -8,7 +8,6 @@ using System.Web.Http.Cors;
 
 namespace TutorialWebApplication.Controllers
 {
- 
     public class SoundController : ApiController
     {
         enum MobileResponse { stopSwing, playSong, playVideo };
@@ -17,11 +16,11 @@ namespace TutorialWebApplication.Controllers
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("api/Sound/CryDetect")]
         [ValidateAntiForgeryToken]
-        public async Task<String> CryDetectAsync([Bind(Include = "Id,GuId,DateTime,Status")] Sound sound)
+        public async Task<String> CryDetectAsync([Bind(Include = "Id,GuId,DateTime,Status")] PlaySong sound)
         {
             if (ModelState.IsValid)
             {
-                await DocumentDBRepository<Sound>.CryDetectAsync(sound);
+                await DocumentDBRepository<PlaySong>.CryDetectAsync(sound);
                 return "Cry detect valid";
                 //push notification
             }
@@ -39,7 +38,7 @@ namespace TutorialWebApplication.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    await DocumentDBRepository<Sound>.CryMobileResAsync(sound);
+                    await DocumentDBRepository<PlaySong>.CryMobileResAsync(sound);
                     return "Response Gone Success";
                 }
 
@@ -48,12 +47,13 @@ namespace TutorialWebApplication.Controllers
         /*Mobile POST respponse for baby cry end*/
 
         /*Get mobile response start*/
+        
         [System.Web.Http.HttpGet]
-        public async Task<Sound> SoundAsync(string id)
+        public async Task<PlaySong> SoundAsync(string id)
         {
             //await DocumentDBRepository<Sound>.GetSoundAsync(id.ToString());
 
-            Sound sound = DocumentDBRepository<Sound>.mobileNotifyBabyCry(id);
+            PlaySong sound = DocumentDBRepository<PlaySong>.mobileNotifyBabyCry(id);
 
             if (sound!=null) {
                 //   return "Baby's Cry Detect for id:"+sound.Id;

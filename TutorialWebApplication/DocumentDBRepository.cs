@@ -118,19 +118,19 @@ namespace TutorialWebApplication
             }
         }
 
-        public static Models.Sound mobileNotifyBabyCry(string guId)
+        public static Models.PlaySong mobileNotifyBabyCry(string guId)
         {
             // Set some common query options
             FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
 
             // Here we find the Andersen family via its LastName
-            IQueryable<Models.Sound> soundQuery = client.CreateDocumentQuery<Models.Sound>(
+            IQueryable<Models.PlaySong> soundQuery = client.CreateDocumentQuery<Models.PlaySong>(
                     UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId1), queryOptions)
                     .Where(f => f.GuId == guId);
 
             // The query is executed synchronously here, but can also be executed asynchronously via the IDocumentQuery<T> interface
             Console.WriteLine("Running LINQ query...");
-            foreach (Models.Sound sound in soundQuery)
+            foreach (Models.PlaySong sound in soundQuery)
             {
              //   if (sound.Status) {
                     Console.WriteLine("\tRead {0}", sound);
@@ -164,7 +164,7 @@ namespace TutorialWebApplication
             // Here we find the Andersen family via its LastName
             IQueryable<Models.Sound> soundQuery = client.CreateDocumentQuery<Models.Sound>(
                     UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId1), queryOptions)
-                    .Where(f => f.GuId == guId);
+                    .Where(f => f.GuiId == guId);
 
             // The query is executed synchronously here, but can also be executed asynchronously via the IDocumentQuery<T> interface
             Console.WriteLine("Running LINQ query...");
@@ -179,6 +179,38 @@ namespace TutorialWebApplication
 
             return null;
         }
+
+        /****/
+        public static async Task<Document> PlaySongSendAsync(T playSong)
+        {
+            return await client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId2), playSong);
+        }
+        /****/
+
+        /**play song getter start**/
+        public static Models.PlaySong playSongResponse(string guId)
+        {
+            // Set some common query options
+            FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
+
+            // Here we find the Andersen family via its LastName
+            IQueryable<Models.PlaySong> playSoundQuery = client.CreateDocumentQuery<Models.PlaySong>(
+                    UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId2), queryOptions)
+                    .Where(f => f.GuId == guId);
+
+            // The query is executed synchronously here, but can also be executed asynchronously via the IDocumentQuery<T> interface
+            Console.WriteLine("Running LINQ query...");
+            foreach (Models.PlaySong playSong in playSoundQuery)
+            {
+                if (playSong.Status) {
+                    Console.WriteLine("\tRead {0}", playSong);
+                    return playSong;
+                }
+            }
+
+            return null;
+        }
+        /**play song getter end**/
 
         public static async Task<Document> CreateItemAsync(T person)
         {
